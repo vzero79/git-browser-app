@@ -6,18 +6,33 @@
 
 var React = require('react-native');
 var {
-  AppRegistry
+  AppRegistry,
+  View
 } = React;
 
 var Login = require('./Login');
 
 var GithubBrowser = React.createClass({
   render: function() {
-    var message = 'hello there';
-    return (
-      <Login />
-    );
-  }
+    if(this.state.isLoggedIn){
+      return (
+        <View >
+        </View>
+      );
+    }else{
+      return (
+        <Login onLogin={this.onLogin} />
+      );
+    }
+  },
+  onLogin: function(){
+    this.setState({isLoggedIn: true});
+  },
+  getInitialState: function() {
+    return {
+      isLoggedIn: false
+    };
+  },
 });
 
 AppRegistry.registerComponent('GithubBrowser', () => GithubBrowser);
