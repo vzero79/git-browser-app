@@ -10,12 +10,16 @@ var {
   Image,
   TextInput,
   TouchableHighlight,
-  Component
+  Component,
+  ActivityIndicatorIOS
 } = React;
 
 class Login extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      showProgress: false
+    }
   }
 
   render(){
@@ -41,12 +45,17 @@ class Login extends Component {
             Log In
           </Text>
         </TouchableHighlight>
+        <ActivityIndicatorIOS
+          animating={this.state.showProgress}
+          size="large"
+          style={styles.loader} />
       </View>
     );
   }
 
   onLoginPressed(){
     console.log('Attempting to log in with username' + this.state.username);
+    this.setState({showProgress: true});
   }
 }
 
@@ -85,6 +94,9 @@ var styles = StyleSheet.create({
     fontSize: 22,
     color: '#FFF',
     alignSelf: 'center'
+  },
+  loader: {
+    marginTop: 20
   }
 });
 
