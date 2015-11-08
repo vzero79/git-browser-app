@@ -8,7 +8,8 @@ var {
   Text,
   View,
   Image,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } = React;
 
 var Login = React.createClass({
@@ -26,6 +27,12 @@ var Login = React.createClass({
           style={styles.input}
           placeholder="Github password"
           secureTextEntry="true" />
+        <TouchableHighlight
+          style={styles.button}>
+          <Text style={styles.buttonText}>
+            Log In
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -51,10 +58,22 @@ var styles = StyleSheet.create({
   input: {
     height: 50,
     marginTop: 10,
-    padding: 4,
+    padding: 10,
     fontSize: 18,
     borderWidth: 1,
     borderColor: '#48bbec'
+  },
+  button: {
+    height: 50,
+    backgroundColor: '#48bbec',
+    alignSelf: 'stretch',
+    marginTop: 10,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 22,
+    color: '#FFF',
+    alignSelf: 'center'
   }
 });
 
