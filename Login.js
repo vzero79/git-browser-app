@@ -35,6 +35,7 @@ class Login extends Component {
           placeholder="Github password"
           secureTextEntry="true" />
         <TouchableHighlight
+          onPress={this.onLoginPressed.bind(this)}
           style={styles.button}>
           <Text style={styles.buttonText}>
             Log In
@@ -42,6 +43,10 @@ class Login extends Component {
         </TouchableHighlight>
       </View>
     );
+  }
+
+  onLoginPressed(){
+    console.log('Attempting to log in with username' + this.state.username);
   }
 }
 
