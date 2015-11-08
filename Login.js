@@ -26,9 +26,11 @@ class Login extends Component {
           Github Browser
         </Text>
         <TextInput
+          onChangeText={(text) => this.setState({username: text})}
           style={styles.input}
           placeholder="Github username" />
         <TextInput
+          onChangeText={(text) => this.setState({password: text})}
           style={styles.input}
           placeholder="Github password"
           secureTextEntry="true" />
