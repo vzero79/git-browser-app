@@ -58,16 +58,21 @@ class Login extends Component {
     console.log('Attempting to log in with username' + this.state.username);
     this.setState({showProgress: true});
 
-    var b = new buffer.Buffer('hello');
-    console.log(b.toString('base64'));
-    // fetch('https://api.github.com/search/repositories?q=react')
-    // .then((response) => {
-    //   return response.json();
-    // })
-    // .then((results) => {
-    //   console.log(results);
-    //   this.setState({showProgress: false});
-    // });
+    var b = new buffer.Buffer(this.state.username + ':' + this.state.password);
+    var encodedAuth = b.toString('base64');
+
+    fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization' : 'Basic ' + encodedAuth
+      }
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((results) => {
+      console.log(results);
+      this.setState({showProgress: false});
+    });
   }
 }
 
