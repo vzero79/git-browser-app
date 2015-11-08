@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var buffer = require('buffer');
 
 var {
   AppRegistry,
@@ -57,14 +58,16 @@ class Login extends Component {
     console.log('Attempting to log in with username' + this.state.username);
     this.setState({showProgress: true});
 
-    fetch('https://api.github.com/search/repositories?q=react')
-    .then((response) => {
-      return response.json();
-    })
-    .then((results) => {
-      console.log(results);
-      this.setState({showProgress: false});
-    });
+    var b = new buffer.Buffer('hello');
+    console.log(b.toString('base64'));
+    // fetch('https://api.github.com/search/repositories?q=react')
+    // .then((response) => {
+    //   return response.json();
+    // })
+    // .then((results) => {
+    //   console.log(results);
+    //   this.setState({showProgress: false});
+    // });
   }
 }
 
