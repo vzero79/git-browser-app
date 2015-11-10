@@ -7,16 +7,39 @@
 var React = require('react-native');
 var {
   AppRegistry,
-  View
+  View,
+  Text,
+  ActivityIndicatorIOS
 } = React;
 
 var Login = require('./Login');
+var AuthService = require('./AuthService');
 
 var GithubBrowser = React.createClass({
+  componentDidMount: function(){
+    AuthService.getAuthInfo((err, authInfo) => {
+      this.setState({
+        checkingAuth: false,
+        isLoggedIn: authInfo != null
+      })
+    })
+  },
+
   render: function() {
+    if(this.state.checkingAuth){
+      return (
+        <View >
+          <ActivityIndicatorIOS
+            animating={true}
+            size="large" />
+        </View>
+      );
+    }
+
     if(this.state.isLoggedIn){
       return (
         <View >
+          <Text>Logged</Text>
         </View>
       );
     }else{
@@ -30,7 +53,8 @@ var GithubBrowser = React.createClass({
   },
   getInitialState: function() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      checkingAuth: true
     };
   },
 });

@@ -1,7 +1,31 @@
 var buffer = require('buffer');
 var AsyncStorage = require('react-native').AsyncStorage;
+var _ = require('lodash');
+
+const authKey = 'auth';
+const userKey = 'user';
 
 class AuthService {
+  getAuthInfo(cb) {
+    AsyncStorage.multiGet([authKey, userKey], (err, val) => {
+      if (err) return cb(err);
+      if (!val) return cb(val);
+
+      var zippedObj = _.zipObject(val);
+
+      if(!zippedObj[authKey]) return cb();
+
+      var authInfo = {
+        header: {
+          Authorization: 'Basic ' + zippedObj[authKey]
+        },
+        user: JSON.parse(zippedObj[userKey])
+      }
+
+      return cb(null, authInfo);
+    });
+  }
+
   login(creds, cb){
     var b = new buffer.Buffer(creds.username + ':' + creds.password);
     var encodedAuth = b.toString('base64');
@@ -25,8 +49,8 @@ class AuthService {
     })
     .then((results) => {
       AsyncStorage.multiSet([
-        ['auth', encodedAuth],
-        ['user', JSON.stringify(results)]
+        [authKey, encodedAuth],
+        [userKey, JSON.stringify(results)]
       ], (err) => {
         if(err) throw err;
         return cb({success: true})
