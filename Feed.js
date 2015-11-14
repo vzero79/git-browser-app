@@ -5,7 +5,8 @@ var {
   View,
   Text,
   Component,
-  ListView
+  ListView,
+  ActivityIndicatorIOS
 } = React;
 
 class Feed extends Component {
@@ -17,7 +18,8 @@ class Feed extends Component {
     });
 
     this.state = {
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds,
+      showProgress: true
     }
   }
 
@@ -38,7 +40,8 @@ class Feed extends Component {
             responseData.filter((ev) =>
               ev.type == 'IssueCommentEvent');
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(feedItems)
+          dataSource: this.state.dataSource.cloneWithRows(feedItems),
+          showProgress: false
         })
       })
     })
@@ -55,6 +58,18 @@ class Feed extends Component {
   }
 
   render(){
+    if (this.state.showProgress){
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}>
+          <ActivityIndicatorIOS
+            size="large"
+            animating={true} />
+        </View>
+      );
+    }
     return (
       <View style={{
         flex: 1,
