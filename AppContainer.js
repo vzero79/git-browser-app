@@ -6,7 +6,8 @@ var {
   Text,
   Component,
   StyleSheet,
-  TabBarIOS
+  TabBarIOS,
+  NavigatorIOS
 } = React;
 
 var Feed = require('./Feed');
@@ -29,7 +30,15 @@ class AppContainer extends Component {
           icon={{uri: "inbox", isStatic: true}}
           onPress={() => this.setState({selectedTab: 'feed'})}
         >
-          <Feed />
+          <NavigatorIOS
+            style={{
+              flex: 1
+            }}
+            initialRoute={{
+              component: Feed,
+              title: 'Feed'
+            }}
+          />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
